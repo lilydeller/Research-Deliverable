@@ -64,24 +64,38 @@ I researched:
 
 Tailwind allowed me to build the interface without creating a large custom CSS file.
 
+Supabase - is used to store and retrieve the credit card data used by the application.
+
+I researched:
+
+- Creating a Supabase project
+- Creating database tables
+- Storing application data
+- Retrieving data from Supabase
+- Row Level Security and database permissions
+
+The prototype uses a Supabase table to store the credit card names, issuers, and reward multipliers. The application retrieves this data from Supabase instead of storing the credit card information directly in the application code.
+
 npm- package manager used by this project
 
 I researched how npm manages dependencies and project scripts.
 
-Some commands I used include:
+How to Run
+
+Clone the repository and navigate to the project folder.
+
+git clone https://github.com/lilydeller/Research-Deliverable.git
+cd Research-Deliverable/credit-card-rewards
+
+Install the project's dependencies.
 
 npm install
 
-Installs the project's dependencies.
+Start the development server.
 
 npm run dev
 
-Starts the development server.
-
-npm run build
-
-Creates a production build.
-
+The application can then be opened at http://localhost:3000.
 
 The project also uses:
 
