@@ -76,6 +76,10 @@ I researched:
 
 The prototype uses a Supabase table to store the credit card names, issuers, and reward multipliers. The application retrieves this data from Supabase instead of storing the credit card information directly in the application code.
 
+Vercel - is used to deploy the Next.js application.
+
+I researched how Vercel can be used to deploy a Next.js application and connect the deployed application to external services such as Supabase.
+
 npm- package manager used by this project
 
 I researched how npm manages dependencies and project scripts.
