@@ -314,6 +314,7 @@ export default function Home() {
               "TypeScript",
               "Tailwind CSS",
               "Supabase",
+              "Vercel",
             ].map((technology) => (
               <span
                 key={technology}
