@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 type Card = {
   name: string;
@@ -14,42 +15,6 @@ type Card = {
   };
 };
 
-const cards: Card[] = [
-  {
-    name: "Freedom Rewards",
-    issuer: "Example Bank",
-    rewards: {
-      dining: 4,
-      groceries: 3,
-      travel: 2,
-      gas: 2,
-      other: 1,
-    },
-  },
-  {
-    name: "Travel Plus",
-    issuer: "Example Bank",
-    rewards: {
-      dining: 3,
-      groceries: 2,
-      travel: 5,
-      gas: 1,
-      other: 1,
-    },
-  },
-  {
-    name: "Everyday Cash",
-    issuer: "Example Bank",
-    rewards: {
-      dining: 2,
-      groceries: 2,
-      travel: 2,
-      gas: 3,
-      other: 1.5,
-    },
-  },
-];
-
 const categories = [
   { value: "dining", label: "Dining" },
   { value: "groceries", label: "Groceries" },
@@ -61,6 +26,7 @@ const categories = [
 type Category = (typeof categories)[number]["value"];
 
 export default function Home() {
+  const [cards, setCards] = useState<Card[]>([]);
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState<Category>("dining");
   const [results, setResults] = useState<
@@ -70,6 +36,36 @@ export default function Home() {
       value: number;
     }[]
   >([]);
+
+  useEffect(() => {
+    async function loadCards() {
+      const { data, error } = await supabase
+        .from("cards")
+        .select("id, name, issuer, dining, groceries, travel, gas, other")
+        .order("id");
+
+      if (error) {
+        console.error("Error loading cards:", error);
+        return;
+      }
+
+      const formattedCards: Card[] = (data ?? []).map((card) => ({
+        name: card.name,
+        issuer: card.issuer,
+        rewards: {
+          dining: Number(card.dining),
+          groceries: Number(card.groceries),
+          travel: Number(card.travel),
+          gas: Number(card.gas),
+          other: Number(card.other),
+        },
+      }));
+
+      setCards(formattedCards);
+    }
+
+    loadCards();
+  }, []);
 
   function calculateRewards() {
     const purchaseAmount = Number(amount);
@@ -317,7 +313,7 @@ export default function Home() {
               "React",
               "TypeScript",
               "Tailwind CSS",
-              "npm",
+              "Supabase",
             ].map((technology) => (
               <span
                 key={technology}
